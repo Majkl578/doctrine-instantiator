@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoctrineTest\InstantiatorTest\Exception;
 
 use Doctrine\Instantiator\Exception\UnexpectedValueException;
