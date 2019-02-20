@@ -16,7 +16,7 @@
         }
     ],
     "require": {
-        "php": "^7.1"
+        "php": "^7.2"
     },
     "require-dev": {
         "ext-phar":                  "*",
@@ -42,5 +42,6 @@
         "branch-alias": {
             "dev-master": "2.0.x-dev"
         }
-    }
+    },
+    "version": "1.99999.99999"
 }
