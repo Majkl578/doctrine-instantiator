@@ -26,7 +26,6 @@
     </rule>
 
     <rule ref="SlevomatCodingStandard.Classes.SuperfluousInterfaceNaming">
-        <exclude-pattern>src/Doctrine/Instantiator/Exception/ExceptionInterface.php</exclude-pattern>
         <exclude-pattern>src/Doctrine/Instantiator/InstantiatorInterface.php</exclude-pattern>
     </rule>
 </ruleset>

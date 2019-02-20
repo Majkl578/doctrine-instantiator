@@ -12,7 +12,7 @@ use function sprintf;
 /**
  * Exception for given parameters causing invalid/unexpected state on instantiation
  */
-class UnexpectedValueException extends BaseUnexpectedValueException implements ExceptionInterface
+class UnexpectedValueException extends BaseUnexpectedValueException implements InstantiatorException
 {
     public static function fromSerializationTriggeredException(
         ReflectionClass $reflectionClass,

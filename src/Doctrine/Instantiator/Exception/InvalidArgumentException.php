@@ -14,7 +14,7 @@ use function trait_exists;
 /**
  * Exception for invalid arguments provided to the instantiator
  */
-class InvalidArgumentException extends BaseInvalidArgumentException implements ExceptionInterface
+class InvalidArgumentException extends BaseInvalidArgumentException implements InstantiatorException
 {
     public static function fromNonExistingClass(string $className) : self
     {

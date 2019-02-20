@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Doctrine\Instantiator;
 
-use Doctrine\Instantiator\Exception\ExceptionInterface;
+use Doctrine\Instantiator\Exception\InstantiatorException;
 
 /**
  * Instantiator provides utility methods to build objects without invoking their constructors
@@ -12,7 +12,7 @@ use Doctrine\Instantiator\Exception\ExceptionInterface;
 interface InstantiatorInterface
 {
     /**
-     * @throws ExceptionInterface
+     * @throws InstantiatorException
      */
     public function instantiate(string $className) : object;
 }
