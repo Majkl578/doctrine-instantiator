@@ -12,11 +12,7 @@ use Doctrine\Instantiator\Exception\ExceptionInterface;
 interface InstantiatorInterface
 {
     /**
-     * @param string $className
-     *
-     * @return object
-     *
      * @throws ExceptionInterface
      */
-    public function instantiate($className);
+    public function instantiate(string $className) : object;
 }

@@ -46,7 +46,7 @@ final class Instantiator implements InstantiatorInterface
     /**
      * {@inheritDoc}
      */
-    public function instantiate($className)
+    public function instantiate(string $className) : object
     {
         if (isset(self::$cachedCloneables[$className])) {
             return clone self::$cachedCloneables[$className];
@@ -63,10 +63,8 @@ final class Instantiator implements InstantiatorInterface
 
     /**
      * Builds the requested object and caches it in static properties for performance
-     *
-     * @return object
      */
-    private function buildAndCacheFromFactory(string $className)
+    private function buildAndCacheFromFactory(string $className) : object
     {
         $factory  = self::$cachedInstantiators[$className] = $this->buildFactory($className);
         $instance = $factory();
@@ -103,18 +101,16 @@ final class Instantiator implements InstantiatorInterface
 
         $this->checkIfUnSerializationIsSupported($reflectionClass, $serializedString);
 
-        return static function () use ($serializedString) {
+        return static function () use ($serializedString) : object {
             return unserialize($serializedString);
         };
     }
 
     /**
-     * @param string $className
-     *
      * @throws InvalidArgumentException
      * @throws ReflectionException
      */
-    private function getReflectionClass($className) : ReflectionClass
+    private function getReflectionClass(string $className) : ReflectionClass
     {
         if (! class_exists($className)) {
             throw InvalidArgumentException::fromNonExistingClass($className);
@@ -134,15 +130,17 @@ final class Instantiator implements InstantiatorInterface
      */
     private function checkIfUnSerializationIsSupported(ReflectionClass $reflectionClass, string $serializedString) : void
     {
-        set_error_handler(static function ($code, $message, $file, $line) use ($reflectionClass, & $error) : void {
-            $error = UnexpectedValueException::fromUncleanUnSerialization(
-                $reflectionClass,
-                $message,
-                $code,
-                $file,
-                $line
-            );
-        });
+        set_error_handler(
+            static function (int $code, string $message, string $file, int $line) use ($reflectionClass, & $error) : void {
+                $error = UnexpectedValueException::fromUncleanUnSerialization(
+                    $reflectionClass,
+                    $message,
+                    $code,
+                    $file,
+                    $line
+                );
+            }
+        );
 
         try {
             $this->attemptInstantiationViaUnSerialization($reflectionClass, $serializedString);
