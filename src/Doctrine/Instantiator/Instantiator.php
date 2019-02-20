@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Doctrine\Instantiator;
 
-use Doctrine\Instantiator\Exception\InvalidArgumentException;
-use Doctrine\Instantiator\Exception\UnexpectedValueException;
+use Doctrine\Instantiator\Exception\InvalidArgument;
+use Doctrine\Instantiator\Exception\UnexpectedValue;
 use Exception;
 use ReflectionClass;
 use ReflectionException;
@@ -80,8 +80,8 @@ final class Instantiator implements InstantiatorInterface
      * Builds a callable capable of instantiating the given $className without
      * invoking its constructor.
      *
-     * @throws InvalidArgumentException
-     * @throws UnexpectedValueException
+     * @throws InvalidArgument
+     * @throws UnexpectedValue
      * @throws ReflectionException
      */
     private function buildFactory(string $className) : callable
@@ -107,32 +107,32 @@ final class Instantiator implements InstantiatorInterface
     }
 
     /**
-     * @throws InvalidArgumentException
+     * @throws InvalidArgument
      * @throws ReflectionException
      */
     private function getReflectionClass(string $className) : ReflectionClass
     {
         if (! class_exists($className)) {
-            throw InvalidArgumentException::fromNonExistingClass($className);
+            throw InvalidArgument::fromNonExistingClass($className);
         }
 
         $reflection = new ReflectionClass($className);
 
         if ($reflection->isAbstract()) {
-            throw InvalidArgumentException::fromAbstractClass($reflection);
+            throw InvalidArgument::fromAbstractClass($reflection);
         }
 
         return $reflection;
     }
 
     /**
-     * @throws UnexpectedValueException
+     * @throws UnexpectedValue
      */
     private function checkIfUnSerializationIsSupported(ReflectionClass $reflectionClass, string $serializedString) : void
     {
         set_error_handler(
             static function (int $code, string $message, string $file, int $line) use ($reflectionClass, & $error) : void {
-                $error = UnexpectedValueException::fromUncleanUnSerialization(
+                $error = UnexpectedValue::fromUncleanUnSerialization(
                     $reflectionClass,
                     $message,
                     $code,
@@ -154,14 +154,14 @@ final class Instantiator implements InstantiatorInterface
     }
 
     /**
-     * @throws UnexpectedValueException
+     * @throws UnexpectedValue
      */
     private function attemptInstantiationViaUnSerialization(ReflectionClass $reflectionClass, string $serializedString) : void
     {
         try {
             unserialize($serializedString);
         } catch (Exception $exception) {
-            throw UnexpectedValueException::fromSerializationTriggeredException($reflectionClass, $exception);
+            throw UnexpectedValue::fromSerializationTriggeredException($reflectionClass, $exception);
         }
     }
 

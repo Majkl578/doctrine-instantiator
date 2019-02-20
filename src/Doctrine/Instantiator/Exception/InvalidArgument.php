@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Doctrine\Instantiator\Exception;
 
-use InvalidArgumentException as BaseInvalidArgumentException;
+use InvalidArgumentException;
 use ReflectionClass;
 use const PHP_VERSION_ID;
 use function interface_exists;
@@ -14,7 +14,7 @@ use function trait_exists;
 /**
  * Exception for invalid arguments provided to the instantiator
  */
-class InvalidArgumentException extends BaseInvalidArgumentException implements InstantiatorException
+class InvalidArgument extends InvalidArgumentException implements InstantiatorException
 {
     public static function fromNonExistingClass(string $className) : self
     {

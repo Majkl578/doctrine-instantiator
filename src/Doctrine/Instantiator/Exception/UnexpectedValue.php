@@ -6,13 +6,13 @@ namespace Doctrine\Instantiator\Exception;
 
 use Exception;
 use ReflectionClass;
-use UnexpectedValueException as BaseUnexpectedValueException;
+use UnexpectedValueException;
 use function sprintf;
 
 /**
  * Exception for given parameters causing invalid/unexpected state on instantiation
  */
-class UnexpectedValueException extends BaseUnexpectedValueException implements InstantiatorException
+class UnexpectedValue extends UnexpectedValueException implements InstantiatorException
 {
     public static function fromSerializationTriggeredException(
         ReflectionClass $reflectionClass,

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace DoctrineTest\InstantiatorTest;
 
 use ArrayObject;
-use Doctrine\Instantiator\Exception\InvalidArgumentException;
-use Doctrine\Instantiator\Exception\UnexpectedValueException;
+use Doctrine\Instantiator\Exception\InvalidArgument;
+use Doctrine\Instantiator\Exception\UnexpectedValue;
 use Doctrine\Instantiator\Instantiator;
 use Doctrine\Instantiator\InstantiatorInterface;
 use DoctrineTest\InstantiatorTestAsset\AbstractClassAsset;
@@ -79,7 +79,7 @@ class InstantiatorTest extends TestCase
             );
         }
 
-        $this->expectException(UnexpectedValueException::class);
+        $this->expectException(UnexpectedValue::class);
 
         $this->instantiator->instantiate(PDORow::class);
     }
@@ -89,7 +89,7 @@ class InstantiatorTest extends TestCase
      */
     public function testInstantiationFromNonExistingClass(string $invalidClassName) : void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(InvalidArgument::class);
 
         $this->instantiator->instantiate($invalidClassName);
     }
